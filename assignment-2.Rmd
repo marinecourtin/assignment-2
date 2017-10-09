@@ -6,8 +6,10 @@ output: html_document
 ---
 
 
-#### Exercise 1 - Writing R functions
+## Exercise 1. Writing R functions
 
+
+#### Question a.
 
 + __Loading functions__
 
@@ -26,9 +28,25 @@ source("functions.R")
     We can test the type of the data contained in our vector. Using `is.numeric(vector)` will return True if all values in our vector are numeric. As a reminder, elements of R vectors must be of the same type. If we do not respect this condition when creating the vector - for example declaring `vec <- c('mot`, 5)` - R automatically chooses a datatype in our place (here 5 would be converted to string).
 
 
+Here's what we get when we apply the function : 
+
 ```{r}
 print(sum_column(iris, "Sepal.Length"))
 print(sum_column(iris, "Species"))
 print(sum_column(warpbreaks, "breaks"))
+```
+
+
+#### Question b. 
+
++ __Boucler sur les valeurs d'un vecteur__
+
+In order to add up the values of our vector, we loop on the elements and iteratively add their value to a variable. We first need to find out the number of elements using `length(vector)`. Then we create a loop which respects the `for (condition) {do}` construction. Our condition specifies the possibles values of the element's indexes : from 1 up to n, if we have n elements in our vector. We simply add the i*th* element of our vector to the total sum each time.
+
+
+```{r}
+print(my_sum(iris$Sepal.Length))
+print(my_sum(iris$Species))
+print(my_sum(warpbreaks$breaks))
 ```
 
