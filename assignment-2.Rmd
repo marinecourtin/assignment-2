@@ -5,3 +5,30 @@ date: "9 octobre 2017"
 output: html_document
 ---
 
+
+#### Exercise 1 - Writing R functions
+
+
++ __Loading functions__
+
+    This chunk allows us to load functions that we've written in a separate R file :
+
+```{r}
+source("functions.R")
+```
+
++ __Test on the existence of a column__
+
+    It is rather easy to test whether a column exists. First we attribute the value returned by the column of the data frame. Then, we test `is.null(value)`. The boolean returned is True when the column does not exist and False when it does. It's also possible to test for the absence of the column using the __!__ operator.
+
++ __Test on the type of value of a vector__
+
+    We can test the type of the data contained in our vector. Using `is.numeric(vector)` will return True if all values in our vector are numeric. As a reminder, elements of R vectors must be of the same type. If we do not respect this condition when creating the vector - for example declaring `vec <- c('mot`, 5)` - R automatically chooses a datatype in our place (here 5 would be converted to string).
+
+
+```{r}
+print(sum_column(iris, "Sepal.Length"))
+print(sum_column(iris, "Species"))
+print(sum_column(warpbreaks, "breaks"))
+```
+
