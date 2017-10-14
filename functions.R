@@ -135,3 +135,25 @@ difference_in_medians <- function(d, var, grouping_var, group1, group2) {
   result = median(d_1[[var]]) - median(d_2[[var]])
   return(result)
 }
+
+
+# Randomize the order of a column.
+#
+# ARGUMENTS:
+# d: a data frame or tibble
+# var: the name of a column of d containing the variable to randomize, provided as a string
+#
+# RETURN VALUE:
+# A data frame or tibble exactly the same as d, except with the order of
+# var permuted randomly.
+#
+randomize <- function(d, var) {
+  # d[[var]] contains our species for each dataline
+  # we randomize its content, each dataline will be attributed one of the speciestags
+  # present in the original d[[var]]
+  d[[var]] <- sample(d[[var]], nrow(d))
+  # this will result in a new dataframe where we can observe what our data would
+  # look like if there was no systematic pattern between species / other variables
+  # such as sepal width
+    return(d)
+}

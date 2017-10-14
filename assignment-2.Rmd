@@ -134,3 +134,21 @@ difference_in_medians(iris, "Sepal.Width", "Species", "virginica", "virginica")
 
 Comment : using `d_1$var` in my function instead of `d_1[[var]]` did not work. This is something that has been commented on at the beginning of this assignment, but I have not yet found why both can't be used interchangably.
 
+#### Question b.
+
++ __Randomizing the order of a column to create permutation tests__
+
+A brief summary of what our function does : d[[var]] contains our species for each dataline. We attribute a new value to it : its randomized content (i.e each dataline of the columns is attributed one of the species tags present in the original d[[var]]). This will result in a new dataframe, where we can observe what our data would look like if there was no systematic pattern between species and other variables such as sepal width.
+
+```{r}
+iris$Sepal.Width[1:10]
+if(!exists(".Random.seed")) set.seed(NULL)
+previous_seed <- .Random.seed
+set.seed(1)
+randomize(iris, "Sepal.Width")$Sepal.Width[1:10]
+randomize(iris, "Species")$Species[1:10]
+randomize(iris, "Species")$Sepal.Width[1:10]
+set.seed(previous_seed)
+```
+
+Comment :  As it's been stated in the assignment, using a function to randomize the contents of a column inside the table does not affect our original data wich remains in its original state.
