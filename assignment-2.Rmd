@@ -97,3 +97,22 @@ To create the violin plot we only need to add `ggplot2::geom_violin()` to our gg
 print(grouped_violin_plot(iris, "Sepal.Length", "Species"))
 ```
 
+#### Question b.
+
++ __Changing the color scheme of a plot__
+
+There are many color palettes already available which facilitate the reading of plots. I used [colorbrewer 2.0](http://colorbrewer2.org/#) which is originally desgined for color coding cartographies to select my palette. The website is really useful as it provides the following options : 
+
++ number of data classes
++ nature of the data
++ colorblind safe feature -> when using colors to add extra dimensions to plots it is best to use color palettes that can be decoded by people with color vision deficiencies. A few references on this topic can be found [here](http://www.cookbook-r.com/Graphs/Colors_(ggplot2)/#a-colorblind-friendly-palette) and [there](). 
+
+```{r}
+p <- grouped_violin_plot(iris, "Sepal.Length", "Species")
+# We specify the color palette we want to use
+p <- p + ggplot2::scale_fill_brewer(palette="Dark2")
+# We add a title to our plot
+p <- p + ggplot2::labs(title="Iris data")
+print(p)
+```
+
