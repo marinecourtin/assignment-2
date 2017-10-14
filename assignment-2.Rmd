@@ -99,7 +99,7 @@ print(grouped_violin_plot(iris, "Sepal.Length", "Species"))
 
 #### Question b.
 
-+ __Changing the color scheme of a plot__
++ __Changing the color scheme and title of a plot__
 
 There are many color palettes already available which facilitate the reading of plots. I used [colorbrewer 2.0](http://colorbrewer2.org/#) which is originally desgined for color coding cartographies to select my palette. The website is really useful as it provides the following options : 
 
@@ -115,4 +115,22 @@ p <- p + ggplot2::scale_fill_brewer(palette="Dark2")
 p <- p + ggplot2::labs(title="Iris data")
 print(p)
 ```
+
+
+## Exercise 3. Permutation tests
+
+#### Question a.
+
++ __Calculating median differences between two subgroups__
+
+We're computing the difference in terms of sepal width medians for irises, depending on their species. We observe that versicolor and virginica irises have different sepal width medians.
+
+```{r}
+# Mesuring the difference in sepal width median for versicolor vs virginica irises
+difference_in_medians(iris, "Sepal.Width", "Species", "versicolor", "virginica")
+# We can hope that there is no difference in the median between 2 identical groups
+difference_in_medians(iris, "Sepal.Width", "Species", "virginica", "virginica")
+```
+
+Comment : using `d_1$var` in my function instead of `d_1[[var]]` did not work. This is something that has been commented on at the beginning of this assignment, but I have not yet found why both can't be used interchangably.
 

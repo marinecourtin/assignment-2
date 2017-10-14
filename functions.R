@@ -32,7 +32,6 @@ sum_column <- function(d, var) {
 # if the vector contains numbers, returns the sum of
 # all values; otherwise, returns NULL
 #
-# [YOUR FUNCTION HERE]
 my_sum <- function(x) {
   result <- NULL
   if (is.numeric(x)) {
@@ -56,7 +55,6 @@ my_sum <- function(x) {
 # if the vector contains numbers, and k is a number returns the sum of
 # all values divided by k; otherwise, returns NULL
 #
-# [YOUR FUNCTION HERE]
 sum_divided_by <- function(x, k) {
   # initialize result as NULL
   # if our conditions aren't verified, this value will be returned
@@ -83,7 +81,6 @@ sum_divided_by <- function(x, k) {
 # if the vector contains numbers, returns the mean of a vector (i.e the sum of
 # all values divided by the length of the vector); otherwise, returns NULL
 #
-# [YOUR FUNCTION HERE]
 my_mean <- function(x) {
     # we store the number of element in x in our variable
     length = length(x)
@@ -113,8 +110,28 @@ grouped_violin_plot <- function(d, var, grouping_var) {
   p <- ggplot2::ggplot(d, ggplot2::aes_string(y=var,
                                               x=grouping_var,
                                               fill=grouping_var))
-  # YOUR CODE HERE: Create a violin plot
   # we add a geom layer called geom_violin to our ggplot object
   p <- p + ggplot2::geom_violin()
   return(p)
+}
+
+
+# Difference in the medians between two groups.
+#
+# ARGUMENTS:
+# d: a data frame or tibble
+# var: the name of a column of d containing the dependent variable, provided as a string
+# grouping_var: the name of a column of d containing a grouping variable, provided as a string
+# group1: the value of grouping_var that corresponds to the first group
+# group2: the value of grouping_var that corresponds to the second group
+#
+# RETURN VALUE:
+# The median value of var for the first group, minus the median value of var for the second
+# group.
+#
+difference_in_medians <- function(d, var, grouping_var, group1, group2) {
+  d_1 <- dplyr::filter(d, get(grouping_var) == group1)
+  d_2 <- dplyr::filter(d, get(grouping_var) == group2)
+  result = median(d_1[[var]]) - median(d_2[[var]])
+  return(result)
 }
