@@ -152,3 +152,30 @@ set.seed(previous_seed)
 ```
 
 Comment :  As it's been stated in the assignment, using a function to randomize the contents of a column inside the table does not affect our original data wich remains in its original state.
+
+
+#### Question c.
+
++ __Generating multiple permutation and computing statistics on them__
+
+We use the `randomize()` function we've previously created to generate n permutations on samples of our data. For each sample we calculate the median difference between versicolor and virginica irises. We store the results in a vector and do the same for computing median differences on the original data. Then, we return a list with the results for each sample.
+
+```{r}
+if(!exists(".Random.seed")) set.seed(NULL)
+previous_seed <- .Random.seed
+set.seed(1)
+ptest_1 <- permutation_twogroups(iris, "Sepal.Width", "Species", "versicolor",
+"virginica", difference_in_medians, n_samples=10)
+ptest_2 <- permutation_twogroups(iris, "Sepal.Width", "Species", "versicolor",
+"virginica", difference_in_medians, n_samples=10)
+ptest_3 <- permutation_twogroups(randomize(iris, "Sepal.Width"), "Sepal.Width",
+"Species", "versicolor", "virginica",
+difference_in_medians, n_samples=10)
+set.seed(previous_seed)
+print(ptest_1)
+print(ptest_2)
+print(ptest_3)
+print(ptest_3$observed)
+print(ptest_3[["observed"]])
+```
+
