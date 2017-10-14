@@ -50,3 +50,18 @@ print(my_sum(iris$Species))
 print(my_sum(warpbreaks$breaks))
 ```
 
+#### Question c.
+
++ __Testing a combination of conditions__
+
+This time, we want to use our `my_sum()` function inside another function `sum_divided_by()`. We give it two arguments : a vector of number x, and a number k by which we'll divide x. We initialize a NULL value to return in case our arguments do not respect these conditions. 
+    
+Here's the result :
+
+```{r}
+print(sum_divided_by(iris$Sepal.Length, 12))
+print(sum_divided_by(iris$Species, 22))
+print(sum_divided_by(iris$Sepal.Length, "Not numeric"))
+print(sum_divided_by(warpbreaks$breaks, -12))
+```
+

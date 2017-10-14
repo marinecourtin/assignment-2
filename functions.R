@@ -45,3 +45,30 @@ my_sum <- function(x) {
   }
   return(result)
 }
+
+# Sum values in a vector.
+#
+# ARGUMENTS:
+# x: a vector
+# k : a number
+#
+# RETURN VALUE:
+# if the vector contains numbers, and k is a number returns the sum of
+# all values divided by k; otherwise, returns NULL
+#
+# [YOUR FUNCTION HERE]
+sum_divided_by <- function(x, k) {
+  # initialize result as NULL
+  # if our conditions aren't verified, this value will be returned
+  # in place of our divided vector
+  result <- NULL
+  # we want the 2 conditions to be true
+  if (is.numeric(x) & is.numeric(k)) {
+    # we use our function with the argument x
+    # and store the result in a variable
+    sum_x <- my_sum(x)
+    # we divide the sum by our number k and store it
+    result = sum_x/k
+  }
+  return(result)
+}
