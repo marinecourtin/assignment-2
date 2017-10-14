@@ -203,9 +203,9 @@ The sampling distribution under this hypothesis seems too different from what we
 
 ```{r}
 ptest_d <- tibble::as_tibble(ptest["permuted"])
-ptest_o <- tibble::as_tibble(ptest["observed"])
+ptest_original <- tibble::as_tibble(ptest["observed"])
 
-plot_hist <- function(permuted, original) {
+plot_hist <- function(permuted, original, sub1=F, sub2=F) {
   # we create the ggplot object, median difference of permuted data on x-axis and counting them on y-axis
   p <- ggplot2::ggplot(permuted, ggplot2::aes(x=permuted,
                                        y=..count..))
@@ -213,11 +213,22 @@ plot_hist <- function(permuted, original) {
   p <- p + ggplot2::geom_histogram(fill="#FFCC66",
                                    colour="black")
   # we add the line corresponding to median difference for original data
-  p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept=original))
+  p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept=original),
+                               colour="black")
+  if (sub1 != F) {
+    p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept=sub1),
+                                 colour = "#1b9e77", linetype="dashed")
+  }
+  if (sub2 != F) {
+    p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept=sub2),
+                                 colour = "#7570b3", linetype="4C88C488")
+  }
+  p <- p + ggplot2::xlim(-0.5, 0.5)
   print(p)
 }
 
-plot_hist(ptest_d, ptest_o)
+plot_hist(ptest_d, ptest_original)
+
 ```
 
 #### Question f.
@@ -253,3 +264,48 @@ Hypothesis A : We get an extreme value as compared with the predictions of a hyp
 Let's take the example of Apple trees of two varieties : group 1 and group 2. Every apple tree yields a certain number of apples per year. We'd predict that the difference in the medians statistic would be extreme on the right
 side if our *Hypothesis B* were that there a lot more group 2 apple trees which yield a lot of apples, compared to group 1 apple tree.
 In which case, we would use the function `p_value_right`. If our hypothesis is true, there will be few cases where median(permutation) >= median(observed), which mean that `n_below` would be small, and in turn p_value_right would also be small.
+
+
+#### Question h.
+
+```{r, cache=T}
+iris_subset_1 <- iris[c(89:94, 108:112),]
+
+
+if(!exists(".Random.seed")) set.seed(NULL)
+previous_seed <- .Random.seed
+set.seed(1)
+ptest_sub_1 <- permutation_twogroups(iris_subset_1, "Sepal.Width", "Species", "versicolor",
+"virginica", difference_in_medians)
+set.seed(previous_seed)
+ptest_d_sub_1 <- tibble::as_tibble(ptest_sub_1["permuted"])
+ptest_original_sub_1 <- tibble::as_tibble(ptest_sub_1["observed"])
+
+iris_subset_2 <- iris[88:114,]
+if(!exists(".Random.seed")) set.seed(NULL)
+previous_seed <- .Random.seed
+set.seed(1)
+ptest_sub_2 <- permutation_twogroups(iris_subset_2, "Sepal.Width", "Species", "versicolor",
+"virginica", difference_in_medians)
+set.seed(previous_seed)
+
+ptest_d_sub_2 <- tibble::as_tibble(ptest_sub_2["permuted"])
+ptest_original_sub_2 <- tibble::as_tibble(ptest_sub_2["observed"])
+```
+
+To plot these figures without having to rewrite functions, I added optional arguments to my earlier `plot_hist` function, to get the values of the median for the subsets.
+
++ The green dashes corresponds to the observed median for the 1st subset
++ The purple alternating dashes correspond to the observed median for the 2nd subset
+
+```{r}
+plot_hist(ptest_d_sub_1, ptest_original, ptest_original_sub_1, ptest_original_sub_2)
+
+plot_hist(ptest_d_sub_2, ptest_original, ptest_original_sub_1, ptest_original_sub_2)
+
+```
+
+The subsets are based on different samples, which means there might be different proportion of versicolor/virginica irises. We can see that the median difference is greater in the 1st subset, then in the 2nd one and last in the whole set. 
+
+
+To complete
