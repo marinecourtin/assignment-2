@@ -237,3 +237,15 @@ new_test_statistic <- function(d, var, grouping_var, group1, group2) {
   result = most_frequent(d_1) - most_frequent(d_2)*10
   return(result)
 }
+
+
+permutation_pvalue_right <- function(p) {
+  n_above <- sum(p$permuted >= p$observed)
+  n_samples <- length(p$permuted)
+  return((n_above + 1)/(n_samples + 1))
+}
+permutation_pvalue_left <- function(p) {
+  n_below <- sum(p$permuted <= p$observed)
+  n_samples <- length(p$permuted)
+  return((n_below + 1)/(n_samples + 1))
+}
