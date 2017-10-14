@@ -179,3 +179,42 @@ print(ptest_3$observed)
 print(ptest_3[["observed"]])
 ```
 
+#### Question d.
+
+To be added
+
+#### Question e.
+
+```{r, cache=T}
+if(!exists(".Random.seed")) set.seed(NULL)
+previous_seed <- .Random.seed
+set.seed(1)
+ptest <- permutation_twogroups(iris, "Sepal.Width", "Species", "versicolor",
+"virginica", difference_in_medians)
+set.seed(previous_seed)
+```
+
+From the plot below, we can observe that it seems __unlikely__ that the two groups of observation "versicolor" and "virginica" are the same. We find some cases in which the observed median difference for the original data and the made up permuted data are the same (the bin corresponding to -0.2) but in the large majority the made up samples (samples in which the two groups of observation are the same) had a median difference closer to 0.
+
+The sampling distribution under this hypothesis seems too different from what we observed in our original data, therefore we would argue that the two groups of observation are not the same.
+
+
+```{r}
+ptest_d <- tibble::as_tibble(ptest["permuted"])
+ptest_o <- tibble::as_tibble(ptest["observed"])
+
+plot_hist <- function(permuted, original) {
+  # we create the ggplot object, median difference of permuted data on x-axis and counting them on y-axis
+  p <- ggplot2::ggplot(permuted, ggplot2::aes(x=permuted,
+                                       y=..count..))
+  # we add the histogram to our ggplot object, specifying the color of the bins
+  p <- p + ggplot2::geom_histogram(fill="#FFCC66",
+                                   colour="black")
+  # we add the line corresponding to median difference for original data
+  p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept=ptest_o))
+  print(p)
+}
+
+plot_hist(ptest_d, ptest_o)
+```
+
