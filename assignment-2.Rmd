@@ -65,3 +65,17 @@ print(sum_divided_by(iris$Sepal.Length, "Not numeric"))
 print(sum_divided_by(warpbreaks$breaks, -12))
 ```
 
+#### Question d.
+
++ __Calculating the mean of a vector__
+
+We want to write a function which will calculate the mean of a vector. In order to do that, we can use the `sum_divided_by()` function we've juste created, and simply provide the length of our vector as the k argument.
+
+We do not need to initialize the result value as NULL in this new function, as it is already part of the output produced by `sum_divided_by()`. If x is not a vector of number, `sum_divided_by()` will return NULL.
+
+```{r}
+print(my_mean(iris$Sepal.Length))
+print(my_mean(iris$Species))
+print(my_mean(warpbreaks$breaks))
+```
+

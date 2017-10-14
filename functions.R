@@ -46,7 +46,7 @@ my_sum <- function(x) {
   return(result)
 }
 
-# Sum values in a vector.
+# Sum values in a vector and divide it by a number
 #
 # ARGUMENTS:
 # x: a vector
@@ -70,5 +70,26 @@ sum_divided_by <- function(x, k) {
     # we divide the sum by our number k and store it
     result = sum_x/k
   }
+  return(result)
+}
+
+
+# Calculate the mean of a vector
+#
+# ARGUMENTS:
+# x: a vector
+#
+# RETURN VALUE:
+# if the vector contains numbers, returns the mean of a vector (i.e the sum of
+# all values divided by the length of the vector); otherwise, returns NULL
+#
+# [YOUR FUNCTION HERE]
+my_mean <- function(x) {
+    # we store the number of element in x in our variable
+    length = length(x)
+    # we use this variable as the k argument in our function
+    # there is no need to check here if x is a vector of number
+    # as it is already implemented in our sum_divided_by function
+    result = sum_divided_by(x, length)
   return(result)
 }
