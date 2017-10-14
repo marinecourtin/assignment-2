@@ -79,3 +79,21 @@ print(my_mean(iris$Species))
 print(my_mean(warpbreaks$breaks))
 ```
 
+
+## Exercise 2. Working with ggplot
+
+
+#### Question a.
+
++ __Creating violin plots__
+
+We want to write a function that will create violin plots. The function takes 3 arguments, the dataframe and the name of our column containing the dependant variable (y axis), and the name of our column containing the grouping variable (x axis).
+
+Inside the function we use the `ggplot2::ggplot()` function to create the ggplot object, then we use `ggplot2::aes_string`to define the aesthetic mappings. According to [this page on ggplot2.tidyverse.org](http://ggplot2.tidyverse.org/index.html) : "Aesthetic mappings describe how variables in the data are mapped to visual properties (aesthetics) of geoms."
+
+To create the violin plot we only need to add `ggplot2::geom_violin()` to our ggplot object. Here's the violin plot we created :
+
+```{r}
+print(grouped_violin_plot(iris, "Sepal.Length", "Species"))
+```
+
