@@ -222,15 +222,15 @@ plot_hist(ptest_d, ptest_o)
 
 #### Question f.
 
-```{r}
+```{r, cache=T}
 if(!exists(".Random.seed")) set.seed(NULL)
 previous_seed <- .Random.seed
 set.seed(1)
-ptest <- permutation_twogroups(iris, "Sepal.Width", "Species", "versicolor",
+ptest_2 <- permutation_twogroups(iris, "Sepal.Width", "Species", "versicolor",
 "virginica",new_test_statistic)
 set.seed(previous_seed)
-ptest_d <- tibble::as_tibble(ptest["permuted"])
-ptest_o <- tibble::as_tibble(ptest["observed"])
+ptest_d <- tibble::as_tibble(ptest_2["permuted"])
+ptest_o <- tibble::as_tibble(ptest_2["observed"])
 
 # Plotting
 plot_hist(ptest_d, ptest_o)
@@ -238,3 +238,18 @@ plot_hist(ptest_d, ptest_o)
 
 
 Discussion to add
+
+#### Question g.
+
++ __Understanding and using p-values__
+
+```{r}
+permutation_pvalue_right(ptest)
+permutation_pvalue_left(ptest)
+```
+
+Hypothesis A : We get an extreme value as compared with the predictions of a hypothesis that the two groups are drawn from equivalent sources of variability; the p-value is a very small fraction.
+
+Let's take the example of Apple trees of two varieties : group 1 and group 2. Every apple tree yields a certain number of apples per year. We'd predict that the difference in the medians statistic would be extreme on the right
+side if our *Hypothesis B* were that there a lot more group 2 apple trees which yield a lot of apples, compared to group 1 apple tree.
+In which case, we would use the function `p_value_right`. If our hypothesis is true, there will be few cases where median(permutation) >= median(observed), which mean that `n_below` would be small, and in turn p_value_right would also be small.
