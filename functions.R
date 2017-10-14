@@ -202,3 +202,38 @@ permutation_twogroups <- function(d, var, grouping_var, group1, group2, statisti
                  permuted=permutation_statistics)
   return(result)
 }
+
+# Find most frequent value in a vector
+# ARGUMENT:
+# d : a vector of numbers
+#
+# RETURN VALUE :
+# The most frequent value in vector d
+most_frequent <- function(d) {
+  result = sort(table(d),decreasing=TRUE)[1]
+  return(result)
+}
+
+# Return 10 * the difference between most frequent values between 2 vectors
+#
+# ARGUMENTS:
+# d: a data frame or tibble
+# var: the name of a column of d containing the dependent variable, provided as a string
+# grouping_var: the name of a column of d containing a grouping variable, provided as a string
+# group1: the value of grouping_var that corresponds to the first group
+# group2: the value of grouping_var that corresponds to the second group
+#
+# RETURN VALUE:
+#
+# A number which is 10* difference between the most frequent value for group 1
+# and most frequent value for group 2
+#
+# Comment : the multiplication by 10 is just here to get a decent scale
+# on our plot
+#
+new_test_statistic <- function(d, var, grouping_var, group1, group2) {
+  d_1 <- dplyr::filter(d, get(grouping_var) == group1)
+  d_2 <- dplyr::filter(d, get(grouping_var) == group2)
+  result = most_frequent(d_1) - most_frequent(d_2)*10
+  return(result)
+}

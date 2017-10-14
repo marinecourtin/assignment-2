@@ -185,6 +185,8 @@ To be added
 
 #### Question e.
 
++ __Plotting a sampling distribution__
+
 ```{r, cache=T}
 if(!exists(".Random.seed")) set.seed(NULL)
 previous_seed <- .Random.seed
@@ -211,10 +213,28 @@ plot_hist <- function(permuted, original) {
   p <- p + ggplot2::geom_histogram(fill="#FFCC66",
                                    colour="black")
   # we add the line corresponding to median difference for original data
-  p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept=ptest_o))
+  p <- p + ggplot2::geom_vline(ggplot2::aes(xintercept=original))
   print(p)
 }
 
 plot_hist(ptest_d, ptest_o)
 ```
 
+#### Question f.
+
+```{r}
+if(!exists(".Random.seed")) set.seed(NULL)
+previous_seed <- .Random.seed
+set.seed(1)
+ptest <- permutation_twogroups(iris, "Sepal.Width", "Species", "versicolor",
+"virginica",new_test_statistic)
+set.seed(previous_seed)
+ptest_d <- tibble::as_tibble(ptest["permuted"])
+ptest_o <- tibble::as_tibble(ptest["observed"])
+
+# Plotting
+plot_hist(ptest_d, ptest_o)
+```
+
+
+Discussion to add
