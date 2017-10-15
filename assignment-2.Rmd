@@ -181,7 +181,9 @@ print(ptest_3[["observed"]])
 
 #### Question d.
 
-To be added
+In the preceding question, we chose to permute on the species of irises in order __to find out what our data would look like if the two groups of observation "versicolor" and "virginica" were the same__. This means that to every dataline (and therefore to every sepal width) a species was attributed randomly. For the purpose of our experiment, we might also have considered permuting on the sepal width, i.e randomly attributed to each dataline one of the sepal width found in our original data. Indeed, this would still show us what the data would look like in case the two groups shared the same source of variability.
+
+Therefore for our purpose __it would not matter__ whether we chose to permute on `var` (Sepal.Width) or `grouping_var` (Species)
 
 #### Question e.
 
@@ -248,7 +250,7 @@ plot_hist(ptest_d, ptest_o)
 ```
 
 
-Discussion to add
+My new statistic test is pretty simple : I look at the most frequent value of each group and compute their difference multiplied by 10. This multiplication by 10 is just a trick I used to make the plot readable without having to change its scale (which would have meant creating a new plotting function...). For the permutations, in the large majority of cases the result of this multiplied difference is superior to -9, while the observed result is around -19. While some permutations led to similar results as the observed on (-19), it still seems unlikely that both groups of observations were identical. I am curious about the distribution of the permutation results. It seems like there were lots of cases in which the multiplied difference was around -9 and it is a myserty to me how that could be the case.
 
 #### Question g.
 
