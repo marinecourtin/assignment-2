@@ -250,7 +250,7 @@ plot_hist(ptest_d, ptest_o)
 ```
 
 
-My new statistic test is pretty simple : I look at the most frequent value of each group and compute their difference multiplied by 10. This multiplication by 10 is just a trick I used to make the plot readable without having to change its scale (which would have meant creating a new plotting function...). For the permutations, in the large majority of cases the result of this multiplied difference is superior to -9, while the observed result is around -19. While some permutations led to similar results as the observed on (-19), it still seems unlikely that both groups of observations were identical. I am curious about the distribution of the permutation results. It seems like there were lots of cases in which the multiplied difference was around -9 and it is a myserty to me how that could be the case.
+My new statistic test is pretty simple : I look at the most frequent value of each group and compute their difference multiplied by 10. This multiplication by 10 is just a trick I used to make the plot readable without having to change its scale (which would have meant creating a new plotting function...). For the permutations, in the large majority of cases the result of this multiplied difference is superior to -9, while the observed result is around -19. While some permutations led to similar results as the observed on (-19), it still seems unlikely that both groups of observations come from the same source of variability. I am curious about the distribution of the permutation results. It seems like there were lots of cases in which the multiplied difference was around -9 and it is a myserty to me how that could be the case.
 
 #### Question g.
 
@@ -261,11 +261,13 @@ permutation_pvalue_right(ptest)
 permutation_pvalue_left(ptest)
 ```
 
-Hypothesis A : We get an extreme value as compared with the predictions of a hypothesis that the two groups are drawn from equivalent sources of variability; the p-value is a very small fraction.
+
+Hypothesis A : Hypothesis of same distribution, the two groups are drawn from equivalent sources of variability. If the value we observed in the real data is entirely expected under hypothesis A, the p-value will be not so small.
+
 
 Let's take the example of Apple trees of two varieties : group 1 and group 2. Every apple tree yields a certain number of apples per year. We'd predict that the difference in the medians statistic would be extreme on the right
-side if our *Hypothesis B* were that there a lot more group 2 apple trees which yield a lot of apples, compared to group 1 apple tree.
-In which case, we would use the function `p_value_right`. If our hypothesis is true, there will be few cases where median(permutation) >= median(observed), which mean that `n_below` would be small, and in turn p_value_right would also be small.
+side if our *Hypothesis B* were that there a lot more group 1 apple trees which yield a lot of apples, compared to group 2 apple tree.
+In which case, we would use the function `p_value_right` because the real data would be exterme in the positive direction (as median(group1) > median(group2) ). If our hypothesis is true, there will be few cases where difference_median(permutation) >= difference median(observed), which mean that `n_below` would be small, and in turn p_value_right would also be small.
 
 
 #### Question h.
@@ -284,6 +286,7 @@ ptest_d_sub_1 <- tibble::as_tibble(ptest_sub_1["permuted"])
 ptest_original_sub_1 <- tibble::as_tibble(ptest_sub_1["observed"])
 
 iris_subset_2 <- iris[88:114,]
+
 if(!exists(".Random.seed")) set.seed(NULL)
 previous_seed <- .Random.seed
 set.seed(1)
@@ -294,6 +297,8 @@ set.seed(previous_seed)
 ptest_d_sub_2 <- tibble::as_tibble(ptest_sub_2["permuted"])
 ptest_original_sub_2 <- tibble::as_tibble(ptest_sub_2["observed"])
 ```
+
+
 
 To plot these figures without having to rewrite functions, I added optional arguments to my earlier `plot_hist` function, to get the values of the median for the subsets.
 
@@ -307,7 +312,16 @@ plot_hist(ptest_d_sub_2, ptest_original, ptest_original_sub_1, ptest_original_su
 
 ```
 
-The subsets are based on different samples, which means there might be different proportion of versicolor/virginica irises. We can see that the median difference is greater in the 1st subset, then in the 2nd one and last in the whole set. 
+We can see that the median difference is greater in the 1st subset, then in the 2nd one and last in the whole set.
 
+The real data seems extreme in the negative direction, so we compute the left p-value :
 
-To complete
+```{r}
+permutation_pvalue_left(ptest_sub_1)
+
+permutation_pvalue_left(ptest_sub_2)
+```
+
+These p-values seem to indicate that our result are not so extreme that the null hypothesis (the hypothesis of same distribution) would be impossible. However, I'd like to point out that the subsets 1 and 2 are smaller in size as the whole dataset. They might contain __too little data__ (which would explain the more erratic distribution of their difference in medians).
+
+On the other hand, the p-value of the whole set seemed to indicate that these result would be fairly extreme with respect to the null hypothesis. We probably __shouldn't change our mind__ as the results on the whole dataset are probably __more trustworthy__ and it seems unwise to look for patterns in smaller subsets when we could be using the whole set.
